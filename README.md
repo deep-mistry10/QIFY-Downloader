@@ -6,7 +6,7 @@ A modern Windows GUI media downloader built with **Python**, **CustomTkinter**, 
 
 ---
 
-## ✨ Features
+## Features
 
 - Modern Windows GUI
 - Download videos in MP4 format
@@ -19,7 +19,7 @@ A modern Windows GUI media downloader built with **Python**, **CustomTkinter**, 
 
 ---
 
-## 🖥️ Requirements
+## Requirements
 
 ### Run from Source
 
@@ -41,13 +41,13 @@ python main.py
 
 ---
 
-## 📦 Windows Executable
+## Windows Executable
 
 If you don't want to install Python, download the latest **QIFY Downloader.exe** from the **Releases** section.
 
 ---
 
-## 🎯 FFmpeg
+## FFmpeg
 
 QIFY Downloader automatically detects FFmpeg if it is installed and available in your system PATH.
 
@@ -68,13 +68,13 @@ C:\ffmpeg\bin
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the **MIT License**.
 
 ---
 
-## 🙏 Credits
+## Credits
 
 QIFY Downloader uses the excellent **yt-dlp** project for media extraction and downloading.
 
@@ -82,7 +82,7 @@ Thanks to the **yt-dlp** contributors for their work on this open-source project
 
 ---
 
-## ⚠️ Disclaimer
+## Disclaimer
 
 Users are responsible for ensuring that their use of this software complies with applicable copyright laws and the terms of service of the websites they access.
 
@@ -90,6 +90,6 @@ This project is intended for educational and personal use. The developers do not
 
 ---
 
-## ⭐ Support
+## Support
 
 If you find this project useful, consider giving it a ⭐ on GitHub.
