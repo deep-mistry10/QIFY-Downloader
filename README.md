@@ -31,3 +31,7 @@ This project is not affiliated with or endorsed by YouTube or Google.
 ## License
 
 MIT
+
+## Credits
+
+This application uses the excellent `yt-dlp` project for media extraction and downloading. See the `yt-dlp` repository for more information and licensing details.
