@@ -19,27 +19,27 @@
 
 ---
 
-## ✨ Features
+## Features
 
-- 🎵 Download audio in MP3 format
-- 🎬 Download videos in MP4 format
-- 📋 Download multiple URLs in a queue
-- 📁 Choose your own download folder
-- 📊 Real-time progress bar
-- ⚡ Automatic FFmpeg detection
-- 🖥️ Modern Windows GUI built with CustomTkinter
-- 📝 Live download log
-- 🔓 Free and open source
+-  Download audio in MP3 format
+-  Download videos in MP4 format
+-  Download multiple URLs in a queue
+-  Choose your own download folder
+-  Real-time progress bar
+-  Automatic FFmpeg detection
+-  Modern Windows GUI built with CustomTkinter
+-  Live download log
+-  Free and open source
 
 ---
 
-## 📸 Screenshot
+##  Screenshot
 
 ![QIFY Downloader](screenshots/main.png)
 
 ---
 
-# 🚀 Installation
+#  Installation
 
 ## Option 1 – Download the Windows Executable (Recommended)
 
@@ -93,7 +93,7 @@ python main.py
 
 ---
 
-# 🎞 FFmpeg Installation
+#  FFmpeg Installation
 
 QIFY Downloader requires **FFmpeg** for audio conversion and video processing.
 
@@ -158,7 +158,7 @@ If version information appears, FFmpeg is installed correctly.
 
 ---
 
-# 📦 Python Dependencies
+#  Python Dependencies
 
 Install using:
 
@@ -173,7 +173,7 @@ Dependencies:
 
 ---
 
-# 📂 Project Structure
+#  Project Structure
 
 ```
 QIFY-Downloader/
@@ -196,7 +196,7 @@ QIFY-Downloader/
 
 ---
 
-# 🤝 Contributing
+#  Contributing
 
 Contributions are welcome.
 
@@ -209,7 +209,7 @@ If you'd like to improve QIFY Downloader:
 
 ---
 
-# 📜 License
+#  License
 
 This project is licensed under the **MIT License**.
 
@@ -217,7 +217,7 @@ See the **LICENSE** file for details.
 
 ---
 
-# 🙏 Credits
+#  Credits
 
 QIFY Downloader uses the excellent **yt-dlp** project for media extraction and downloading.
 
@@ -225,7 +225,7 @@ Special thanks to the **yt-dlp** contributors for maintaining such an amazing op
 
 ---
 
-# ⚠️ Disclaimer
+#  Disclaimer
 
 QIFY Downloader is an independent open-source application.
 
@@ -237,7 +237,7 @@ The developers do not encourage or endorse copyright infringement.
 
 ---
 
-# ⭐ Support
+#  Support
 
 If you find this project useful, please consider giving it a ⭐ on GitHub.
 
