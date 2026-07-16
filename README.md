@@ -244,5 +244,8 @@ If you find this project useful, please consider giving it a ⭐ on GitHub.
 It helps others discover the project and supports future development.
 
 ---
+Windows Security Notice
+
+QIFY Downloader is an open-source application. Because the Windows executable is not digitally signed, Windows Smart App Control or Microsoft Defender may display a warning the first time you run it. You can inspect the source code on GitHub or build the application yourself from source if you prefer.
 
 Made with ❤️ by **Deep Mistry**
