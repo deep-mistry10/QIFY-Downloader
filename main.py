@@ -23,15 +23,23 @@ import sys
 import subprocess
 import shutil
 
+cancel_download = False
+
+
+def cancel_download_func():
+    global cancel_download
+    cancel_download = True
+    status_var.set("Cancelling...")
+
+
 # ---------------- UI THEME ----------------
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
 
+
 # ---------------- Windows Configuration ----------------
 HOME = str(Path.home())
-
 DOWNLOAD_FOLDER = os.path.join(HOME, "Desktop", "YT_Downloads")
-
 
 os.makedirs(DOWNLOAD_FOLDER, exist_ok=True)
 
@@ -47,8 +55,8 @@ else:
 if os.path.exists(FFMPEG_PATH):
     os.environ["PATH"] += os.pathsep + FFMPEG_PATH
 
-# ---------------- FUNCTIONS ----------------
 
+# ---------------- FUNCTIONS ----------------
 def sanitize_filename(name):
     return re.sub(r'[\\/*?:"<>|]', "", name)
 
@@ -91,13 +99,23 @@ def clear_urls():
 
 
 def progress_hook(d):
+    global cancel_download
+
+    if cancel_download:
+        raise Exception("Download cancelled by user")
+
     if d['status'] == 'downloading':
         try:
             percent = float(d.get('_percent_str', '0.0%').replace('%', '')) / 100
             pb.set(percent)
-            status_var.set(f"{d.get('_percent_str','')} | {d.get('_speed_str','')} | ETA {d.get('_eta_str','')}")
+            status_var.set(
+                f"{d.get('_percent_str','')} | "
+                f"{d.get('_speed_str','')} | "
+                f"ETA {d.get('_eta_str','')}"
+            )
         except:
             pass
+
     elif d['status'] == 'finished':
         log_text.insert("end", f"\nFinished: {d['filename']}\n")
         log_text.see("end")
@@ -113,8 +131,11 @@ def disable_ui():
 def enable_ui():
     for btn in [start_btn, add_btn, remove_btn, clear_btn, browse_btn, audio_radio, video_radio]:
         btn.configure(state="normal")
+
     url_entry.configure(state="normal")
     folder_entry.configure(state="normal")
+
+    cancel_btn.configure(state="disabled")
 
 
 class StdoutRedirector:
@@ -130,6 +151,8 @@ class StdoutRedirector:
 
 
 def start_download():
+    global cancel_download
+    cancel_download = False
 
     if not validate_ffmpeg():
         return
@@ -152,14 +175,10 @@ def start_download():
         'ignoreerrors': True,
         'retries': 10,
         'socket_timeout': 30,
-
         'http_headers': {
             "User-Agent": "Mozilla/5.0",
         },
-
-
         'format': 'bestvideo+bestaudio/best',
-
         'sleep_interval': 2,
         'max_sleep_interval': 5,
     }
@@ -168,11 +187,21 @@ def start_download():
         ydl_opts = {
             **base_opts,
             'outtmpl': os.path.join(audio_folder, "%(title)s.%(ext)s"),
-            'postprocessors': [{
-                'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'mp3',
-                'preferredquality': '192',
-            }],
+            'postprocessors': [
+                {
+                    'key': 'FFmpegExtractAudio',
+                    'preferredcodec': 'mp3',
+                    'preferredquality': '192',
+                },
+                {
+                    'key': 'EmbedThumbnail',
+                },
+                {
+                    'key': 'FFmpegMetadata',
+                },
+            ],
+            'writethumbnail': True,
+            'addmetadata': True,
         }
     else:
         ydl_opts = {
@@ -185,6 +214,7 @@ def start_download():
         pb.set(0)
         status_var.set("Downloading...")
         disable_ui()
+        cancel_btn.configure(state="normal")
 
         for i, url in enumerate(urls, 1):
             try:
@@ -193,21 +223,30 @@ def start_download():
                     ydl.download([url])
                 print("Done\n")
             except Exception as e:
-                print("Error:", e)
+                if cancel_download:
+                    print("Download cancelled by user.")
+                    break
+                else:
+                    print("Error:", e)
 
-        status_var.set("All downloads finished!")
         pb.set(0)
         enable_ui()
-        messagebox.showinfo("Done", "All downloads completed!")
+        cancel_btn.configure(state="disabled")
+
+        if cancel_download:
+            status_var.set("Download Cancelled")
+            messagebox.showinfo("Cancelled", "Download cancelled.")
+        else:
+            status_var.set("All downloads finished!")
+            messagebox.showinfo("Done", "All downloads completed!")
 
     threading.Thread(
-    target=run_download,
-    daemon=True
-).start()
+        target=run_download,
+        daemon=True
+    ).start()
 
 
 # ---------------- UI ----------------
-
 root = ctk.CTk()
 icon_path = os.path.join("assets", "qify.ico")
 if os.path.exists(icon_path):
@@ -265,7 +304,14 @@ video_radio = ctk.CTkRadioButton(choice_frame, text="Video (MP4)", variable=down
 video_radio.pack(side="left", padx=10)
 
 start_btn = ctk.CTkButton(root, text="Start Download", command=start_download)
+cancel_btn = ctk.CTkButton(
+    root,
+    text="Cancel Download",
+    command=cancel_download_func,
+    state="disabled"
+)
 start_btn.pack(pady=10)
+cancel_btn.pack(pady=5)
 
 pb = ctk.CTkProgressBar(root, width=750)
 pb.pack(pady=5)
