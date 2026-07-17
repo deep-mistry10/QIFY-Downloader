@@ -104,6 +104,9 @@ Download FFmpeg from the official website:
 https://ffmpeg.org/download.html
 
 Choose a **Windows build**.
+or **Direct Download Link**
+
+https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip
 
 ---
 
