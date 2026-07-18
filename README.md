@@ -8,13 +8,29 @@
   <strong>A modern Windows GUI media downloader built with Python, CustomTkinter, and yt-dlp.</strong>
 </p>
 
+##  Quick Start
+
+Install the latest stable version from PyPI:
+
+```bash
+pip install qify-downloader
+```
+
+Launch the application:
+
+```bash
+qify-downloader
+```
+
 <p align="center">
+
 
 ![Platform](https://img.shields.io/badge/Platform-Windows-blue)
 ![Python](https://img.shields.io/badge/Python-3.10+-yellow)
 ![GitHub License](https://img.shields.io/github/license/deep-mistry10/QIFY-Downloader)
 ![GitHub Release](https://img.shields.io/github/v/release/deep-mistry10/QIFY-Downloader)
 ![GitHub Downloads](https://img.shields.io/github/downloads/deep-mistry10/QIFY-Downloader/total)
+[![PyPI Version](https://img.shields.io/pypi/v/qify-downloader)](https://pypi.org/project/qify-downloader/)
 ![Status](https://img.shields.io/badge/Status-Stable-success)
 
 </p>
@@ -28,7 +44,7 @@
 -  Download multiple URLs in a queue
 -  Choose your own download folder
 -  Real-time progress bar
--  Automatic FFmpeg detection
+-  FFmpeg support (bundled with the PyPI package)
 -  Modern Windows GUI built with CustomTkinter
 -  Live download log
 -  Free and open-source software licensed under GPL v3.
@@ -43,17 +59,52 @@
 
 #  Installation
 
-## Option 1 – Download the Windows Executable (Recommended)
+## Option 1 – Install from PyPI (Recommended)
+
+Install the latest stable version from PyPI:
+
+```bash
+pip install qify-downloader
+```
+
+Launch the application:
+
+```bash
+qify-downloader
+```
+
+Upgrade:
+
+```bash
+pip install --upgrade qify-downloader
+```
+
+Uninstall:
+
+```bash
+pip uninstall qify-downloader
+```
+
+**Requirements**
+
+- Windows 10 or Windows 11
+- Python 3.10+
+
+> **Note:** FFmpeg is bundled with QIFY Downloader. No separate installation is required.
+
+---
+
+## Option 2 – Download the Windows Executable
 
 1. Open the **Releases** page.
 
-2. Download the latest:
+2. Download:
 
-```
+```text
 QIFY-Downloader.exe
 ```
 
-3. Install FFmpeg (see below).
+3. Install FFmpeg (required for the standalone executable; see below).
 
 4. Double-click **QIFY-Downloader.exe**.
 
@@ -61,7 +112,7 @@ No Python installation is required.
 
 ---
 
-## Option 2 – Run From Source
+## Option 3 – Run From Source
 
 ### Requirements
 
@@ -95,7 +146,8 @@ python main.py
 
 ---
 
-#  FFmpeg Installation
+#  FFmpeg Installation (Standalone EXE & Source Only)
+> **Note:** If you installed QIFY Downloader using `pip install qify-downloader`, FFmpeg is already bundled and you can skip this section.
 
 QIFY Downloader requires **FFmpeg** for audio conversion and video processing.
 
@@ -240,15 +292,58 @@ This helps keep the project free, transparent, and community-driven.
 
 ## Credits
 
-QIFY Downloader is powered by the following open-source projects:
+QIFY Downloader would not be possible without these excellent open-source projects:
 
-- yt-dlp
-- CustomTkinter
-- FFmpeg
+- **yt-dlp** — Media downloading engine
+- **FFmpeg** — Audio and video processing
+- **CustomTkinter** — Modern desktop user interface
+
+Special thanks to all contributors and maintainers of these projects.
 
 Special thanks to the maintainers and contributors of these projects.
 
 ---
+
+## Third-Party Software
+
+QIFY Downloader uses several open-source projects.
+
+For third-party licenses and notices, see **THIRD_PARTY_NOTICES.md**.
+
+# Third-Party Software
+
+QIFY Downloader includes or depends on the following open-source software:
+
+| Software | Purpose | License |
+|----------|---------|---------|
+| yt-dlp | Media downloading engine | Unlicense |
+| FFmpeg | Audio/video processing | LGPL v2.1+ or GPL v2+ (depending on the bundled build) |
+| CustomTkinter | Modern GUI framework | MIT License |
+
+
+### FFmpeg
+
+The PyPI package of QIFY Downloader includes a bundled FFmpeg build for user convenience.
+
+If you are using the standalone executable or running the project from source, you may need to install FFmpeg separately unless otherwise stated.
+
+FFmpeg is developed by the FFmpeg project and is licensed under its own license.
+
+https://ffmpeg.org/
+
+The bundled FFmpeg binaries remain the property of the FFmpeg project and are distributed under the FFmpeg license. QIFY Downloader does not modify or claim ownership of FFmpeg.
+
+### yt-dlp
+
+QIFY Downloader uses yt-dlp for downloading media from supported websites.
+
+https://github.com/yt-dlp/yt-dlp
+
+### CustomTkinter
+
+The graphical user interface is built using CustomTkinter.
+
+https://github.com/TomSchimansky/CustomTkinter
 
 #  Disclaimer
 
