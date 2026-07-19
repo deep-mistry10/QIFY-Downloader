@@ -1,7 +1,7 @@
 # QIFY Downloader
 
 <p align="center">
-  <img src="assets/qify.ico" alt="QIFY Downloader Logo" width="120">
+  <img src="assets/Qify.png" alt="QIFY Downloader Logo" width="120">
 </p>
 
 <p align="center">
