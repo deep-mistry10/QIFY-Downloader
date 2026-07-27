@@ -22,6 +22,7 @@ import re
 import sys
 import subprocess
 import shutil
+import ctypes
 
 from qify_downloader.version import __version__
 cancel_download = False
@@ -281,9 +282,19 @@ def start_download():
 
 root = ctk.CTk()
 
+# Windows App ID
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
+    "com.qify.downloader"
+)
+
 try:
-    with as_file(files("qify_downloader").joinpath("qify.ico")) as icon_path:
-        root.iconbitmap(icon_path)
+    if getattr(sys, "frozen", False):
+        icon_path = os.path.join(sys._MEIPASS, "assets", "qify.ico")
+    else:
+        icon_path = os.path.join(os.path.dirname(__file__), "assets", "qify.ico")
+
+    root.iconbitmap(icon_path)
+
 except Exception as e:
     print("Could not load icon:", e)
 
