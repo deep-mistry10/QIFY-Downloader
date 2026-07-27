@@ -23,6 +23,7 @@ import sys
 import subprocess
 import shutil
 
+from qify_downloader.version import __version__
 cancel_download = False
 
 
@@ -43,17 +44,48 @@ DOWNLOAD_FOLDER = os.path.join(HOME, "Desktop", "YT_Downloads")
 
 os.makedirs(DOWNLOAD_FOLDER, exist_ok=True)
 
-# Detect FFmpeg automatically
-ffmpeg = shutil.which("ffmpeg")
+# ---------------- FFmpeg Detection ----------------
 
-if ffmpeg:
-    FFMPEG_PATH = os.path.dirname(ffmpeg)
-else:
-    FFMPEG_PATH = r"C:\ffmpeg\bin"
+from importlib.resources import files, as_file
 
-# Add only if the folder exists
-if os.path.exists(FFMPEG_PATH):
-    os.environ["PATH"] += os.pathsep + FFMPEG_PATH
+def get_ffmpeg_path():
+    """
+    Search order:
+    1. Bundled FFmpeg (PyPI)
+    2. Bundled FFmpeg (PyInstaller)
+    3. FFmpeg in PATH
+    4. C:\ffmpeg\bin
+    """
+
+    # Running from PyInstaller EXE
+    if getattr(sys, "frozen", False):
+        bundled = Path(sys._MEIPASS) / "ffmpeg"
+
+    # Running from PyPI / source
+    else:
+        bundled = Path(files("qify_downloader").joinpath("ffmpeg"))
+
+    # Bundled FFmpeg
+    if (bundled / "ffmpeg.exe").exists():
+        return bundled
+
+    # FFmpeg in PATH
+    ffmpeg = shutil.which("ffmpeg")
+    if ffmpeg:
+        return Path(ffmpeg).parent
+
+    # Legacy install
+    legacy = Path(r"C:\ffmpeg\bin")
+    if (legacy / "ffmpeg.exe").exists():
+        return legacy
+
+    return None
+
+
+FFMPEG_PATH = get_ffmpeg_path()
+
+if FFMPEG_PATH:
+    os.environ["PATH"] = str(FFMPEG_PATH) + os.pathsep + os.environ["PATH"]
 
 
 # ---------------- FUNCTIONS ----------------
@@ -68,14 +100,13 @@ def browse_folder():
 
 
 def validate_ffmpeg():
-    if shutil.which("ffmpeg"):
+    if FFMPEG_PATH and (Path(FFMPEG_PATH) / "ffmpeg.exe").exists():
         return True
 
     messagebox.showerror(
         "FFmpeg Not Found",
-        "FFmpeg is not installed or not found in your PATH.\n\n"
-        "Please install FFmpeg or place it in:\n"
-        "C:\\ffmpeg\\bin"
+        "FFmpeg could not be found.\n\n"
+        "Please reinstall QIFY Downloader or install FFmpeg."
     )
     return False
 
@@ -247,11 +278,16 @@ def start_download():
 
 
 # ---------------- UI ----------------
+
 root = ctk.CTk()
-icon_path = os.path.join("assets", "qify.ico")
-if os.path.exists(icon_path):
-    root.iconbitmap(icon_path)
-root.title("Qify Downloader - Windows")
+
+try:
+    with as_file(files("qify_downloader").joinpath("qify.ico")) as icon_path:
+        root.iconbitmap(icon_path)
+except Exception as e:
+    print("Could not load icon:", e)
+
+root.title(f"QIFY Downloader v{__version__} - Windows")
 root.geometry("900x650")
 
 url_frame = ctk.CTkFrame(root)
@@ -325,8 +361,22 @@ log_frame.pack(fill="both", expand=True, padx=10, pady=5)
 log_text = ctk.CTkTextbox(log_frame)
 log_text.pack(fill="both", expand=True)
 
+version_frame = ctk.CTkFrame(root, fg_color="transparent")
+version_frame.pack(fill="x", padx=10, pady=(0, 5))
+
+version_label = ctk.CTkLabel(
+    version_frame,
+    text=f"QIFY Downloader v{__version__}",
+    text_color="gray"
+)
+version_label.pack(side="right")
+
 sys.stdout = StdoutRedirector(log_text)
 sys.stderr = StdoutRedirector(log_text)
 
-if __name__ == "__main__":
+def main():
     root.mainloop()
+
+
+if __name__ == "__main__":
+    main()
