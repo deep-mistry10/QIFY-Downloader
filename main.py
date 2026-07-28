@@ -24,7 +24,7 @@ import subprocess
 import shutil
 import ctypes
 
-from qify_downloader.version import __version__
+from __version__ import __version__
 cancel_download = False
 
 
