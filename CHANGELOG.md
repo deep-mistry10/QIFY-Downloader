@@ -1,4 +1,4 @@
 # Changelog
 
-## v1.3.9
+## v1.4.0
 - Initial public release
