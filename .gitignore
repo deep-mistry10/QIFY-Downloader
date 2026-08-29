@@ -10,3 +10,10 @@ dist/
 .idea/
 Thumbs.db
 .DS_Store
+# Build files
+build/
+dist/
+*.spec
+
+# FFmpeg binaries
+ffmpeg/

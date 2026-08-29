@@ -89,6 +89,29 @@ if FFMPEG_PATH:
     os.environ["PATH"] = str(FFMPEG_PATH) + os.pathsep + os.environ["PATH"]
 
 
+def get_video_format():
+    quality = video_quality.get()
+
+    quality_map = {
+        "2160p (4K)": 2160,
+        "1440p": 1440,
+        "1080p": 1080,
+        "720p": 720,
+        "480p": 480,
+        "360p": 360,
+    }
+
+    if quality == "Best Available":
+        return "bestvideo+bestaudio/best"
+
+    height = quality_map.get(quality, 1080)
+
+    return (
+        f"bestvideo[height<={height}]"
+        f"+bestaudio/best[height<={height}]"
+    )
+
+
 # ---------------- FUNCTIONS ----------------
 def sanitize_filename(name):
     return re.sub(r'[\\/*?:"<>|]', "", name)
@@ -210,7 +233,7 @@ def start_download():
         'http_headers': {
             "User-Agent": "Mozilla/5.0",
         },
-        'format': 'bestvideo+bestaudio/best',
+
         'sleep_interval': 2,
         'max_sleep_interval': 5,
     }
@@ -238,6 +261,7 @@ def start_download():
     else:
         ydl_opts = {
             **base_opts,
+            'format': get_video_format(),
             'outtmpl': os.path.join(video_folder, "%(title)s.%(ext)s"),
             'merge_output_format': 'mp4',
         }
@@ -344,11 +368,49 @@ choice_frame = ctk.CTkFrame(root)
 choice_frame.pack(fill="x", padx=10, pady=5)
 
 download_choice = ctk.StringVar(value="audio")
-audio_radio = ctk.CTkRadioButton(choice_frame, text="Audio (MP3)", variable=download_choice, value="audio")
+
+audio_radio = ctk.CTkRadioButton(
+    choice_frame,
+    text="Audio (MP3)",
+    variable=download_choice,
+    value="audio",
+    command=lambda: quality_menu.configure(state="disabled")
+)
 audio_radio.pack(side="left", padx=10)
 
-video_radio = ctk.CTkRadioButton(choice_frame, text="Video (MP4)", variable=download_choice, value="video")
+video_radio = ctk.CTkRadioButton(
+    choice_frame,
+    text="Video (MP4)",
+    variable=download_choice,
+    value="video",
+    command=lambda: quality_menu.configure(state="normal")
+)
 video_radio.pack(side="left", padx=10)
+
+# Video quality selector
+video_quality = ctk.StringVar(value="Best Available")
+
+quality_label = ctk.CTkLabel(
+    choice_frame,
+    text="Video Quality:"
+)
+quality_label.pack(side="left", padx=(30, 5))
+
+quality_menu = ctk.CTkOptionMenu(
+    choice_frame,
+    variable=video_quality,
+    values=[
+        "Best Available",
+        "2160p (4K)",
+        "1440p",
+        "1080p",
+        "720p",
+        "480p",
+        "360p"
+    ],
+    state="disabled"
+)
+quality_menu.pack(side="left", padx=5)
 
 start_btn = ctk.CTkButton(root, text="Start Download", command=start_download)
 cancel_btn = ctk.CTkButton(
