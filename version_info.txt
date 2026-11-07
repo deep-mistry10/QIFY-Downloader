@@ -1,8 +1,9 @@
+
 VSVersionInfo(
   ffi=FixedFileInfo(
-    filevers=(1,4,0,0),
-    prodvers=(1,4,0,0),
-    mask=0x3f,
+    filevers=(1, 5, 0, 0),
+    prodvers=(1, 5, 0, 0),
+    mask=0x3F,
     flags=0x0,
     OS=0x40004,
     fileType=0x1,
@@ -12,21 +13,22 @@ VSVersionInfo(
   kids=[
     StringFileInfo([
       StringTable(
-        u'040904B0',
+        '040904B0',
         [
-          StringStruct(u'CompanyName', u'QIFY'),
-          StringStruct(u'FileDescription', u'QIFY Downloader'),
-          StringStruct(u'FileVersion', u'1.5.0'),
-          StringStruct(u'InternalName', u'QIFY Downloader'),
-          StringStruct(u'OriginalFilename', u'QIFY-Downloader.exe'),
-          StringStruct(u'ProductName', u'QIFY Downloader'),
-          StringStruct(u'ProductVersion', u'1.5.0'),
-          StringStruct(u'LegalCopyright', u'© 2026 QIFY')
+          StringStruct('CompanyName', 'QIFY'),
+          StringStruct('DeveloperName', 'DEEP'),
+          StringStruct('FileDescription', 'QIFY Downloader - Video and Audio Downloader'),
+          StringStruct('FileVersion', '1.5.0'),
+          StringStruct('InternalName', 'QIFY-Downloader'),
+          StringStruct('LegalCopyright', 'Copyright (C) 2026 Deep Mistry'),
+          StringStruct('OriginalFilename', 'QIFY-Downloader.exe'),
+          StringStruct('ProductName', 'QIFY Downloader'),
+          StringStruct('ProductVersion', '1.5.0')
         ]
       )
     ]),
     VarFileInfo([
-      VarStruct(u'Translation', [1033, 1200])
+      VarStruct('Translation', [1033, 1200])
     ])
   ]
 )
