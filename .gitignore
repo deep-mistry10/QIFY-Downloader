@@ -11,3 +11,20 @@ dist/
 Thumbs.db
 .DS_Store
 ffmpeg/
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Build files
+build/
+dist/
+*.spec
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# PyInstaller
+*.manifest
